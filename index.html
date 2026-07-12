@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escuela de Canasta Ale y Mau</title>
+<meta name="description" content="Aprende a jugar canasta desde cero. Lo importante es convivir.">
+<meta name="theme-color" content="#0b3226">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+<div id="app">
+
+  <!-- ============ PANTALLA: BIENVENIDA ============ -->
+  <section id="screen-welcome" class="screen active" aria-labelledby="welcome-title">
+    <main id="main-content" class="wrap">
+      <div class="center" style="margin-bottom:10px;">
+        <span aria-hidden="true" style="font-size:2.4rem;">♠ ♥ ♦ ♣</span>
+      </div>
+      <h1 id="welcome-title" class="center">Escuela de Canasta<br>Ale y Mau</h1>
+      <h2 class="center" style="font-size:1.05rem; color:var(--gold-bright); font-family:var(--font-body); font-weight:600;">
+        Bienvenidos, TJ, Euge, Eli y Paloma
+      </h2>
+
+      <div class="card">
+        <p>Nos emociona muchísimo que vayamos a compartir este fin de semana con ustedes. Para nosotros, la canasta nunca ha sido solamente un juego. Es una excusa para pasar tiempo juntos, platicar, reírnos y crear recuerdos.</p>
+        <p>Sí, nos gusta competir y queremos ganar, pero la regla más importante siempre será convivir.</p>
+        <p>Preparamos esta escuela para que lleguen entendiendo la dinámica y podamos dedicar el fin de semana a jugar y disfrutar.</p>
+        <p style="text-align:right; font-family:var(--font-display); font-style:italic; margin-bottom:0;">— Ale y Mau</p>
+      </div>
+
+      <div class="card">
+        <p class="eyebrow" style="color:var(--gold-deep);">¿Quién eres?</p>
+        <div class="name-grid" id="name-grid-welcome" role="group" aria-label="Selecciona tu nombre"></div>
+        <div id="other-name-wrap" class="field" style="display:none; margin-top:6px;">
+          <label for="other-name-input">Escribe tu nombre</label>
+          <input type="text" id="other-name-input" maxlength="20" placeholder="Tu nombre">
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:6px;">
+        <button class="btn btn-primary" id="btn-start-course" style="font-size:1.1rem; padding:16px 34px;">Comenzar el curso</button>
+      </div>
+      <p class="center muted" style="margin-top:14px; color:var(--cream-soft);">Tu progreso se guarda automáticamente en este dispositivo.</p>
+    </main>
+  </section>
+
+  <!-- ============ PANTALLA: MENÚ PRINCIPAL ============ -->
+  <section id="screen-menu" class="screen" aria-labelledby="menu-title">
+    <div class="wrap">
+      <div class="topbar">
+        <span class="brand">♣ Ale y Mau</span>
+        <div class="actions">
+          <button class="icon-btn" id="btn-sound-toggle" aria-pressed="false" title="Silenciar sonidos">🔊</button>
+          <button class="icon-btn" id="btn-quickref-open" title="Estamos jugando: consulta rápida">📖</button>
+        </div>
+      </div>
+      <h1 id="menu-title" style="font-size:1.5rem;">Hola, <span id="menu-username">jugador</span> 👋</h1>
+      <p style="color:var(--cream-soft);" id="menu-welcome-msg">Elige un módulo para continuar aprendiendo.</p>
+
+      <div class="card">
+        <div class="progress-label"><span>Progreso general</span><span id="progress-percent-label">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill-main"></div></div>
+      </div>
+
+      <h3 style="color:var(--cream); font-size:1rem; margin-top:18px;">Módulos del curso</h3>
+      <div class="module-grid" id="module-grid"></div>
+
+      <h3 style="color:var(--cream); font-size:1rem; margin-top:22px;">Herramientas</h3>
+      <div class="module-grid">
+        <button class="module-tile" data-tool="quickref"><span class="num">📖</span><span class="meta"><strong>Estamos jugando</strong><span>Consulta rápida durante la partida</span></span></button>
+        <button class="module-tile" data-tool="calc-score"><span class="num">🧮</span><span class="meta"><strong>Calculadora de puntuación</strong><span>Calcula el resultado de una mano</span></span></button>
+        <button class="module-tile" data-tool="calc-opening"><span class="num">🔓</span><span class="meta"><strong>Calculadora de apertura</strong><span>¿Alcanza para abrir?</span></span></button>
+        <button class="module-tile" data-tool="exam"><span class="num">🎓</span><span class="meta"><strong>Examen final</strong><span>Demuestra lo que aprendiste</span></span></button>
+        <button class="module-tile" data-tool="certificate"><span class="num">🏅</span><span class="meta"><strong>Certificado</strong><span id="cert-tile-status">Disponible al aprobar el examen</span></span></button>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <button class="btn btn-ghost btn-sm" id="btn-reset-progress">Reiniciar progreso</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: MÓDULO ============ -->
+  <section id="screen-module" class="screen" aria-labelledby="module-title-h">
+    <div class="wrap" style="flex:1; display:flex; flex-direction:column;">
+      <div class="topbar">
+        <button class="icon-btn" id="btn-module-to-menu" title="Volver al menú">☰</button>
+        <span class="brand" id="module-title-h">Módulo</span>
+        <button class="icon-btn" id="btn-quickref-open-2" title="Estamos jugando: consulta rápida">📖</button>
+      </div>
+      <div class="progress-label"><span id="module-slide-label">Pantalla 1 de 1</span><span id="module-name-label"></span></div>
+      <div class="progress-track" style="margin-bottom:16px;"><div class="progress-fill" id="progress-fill-module"></div></div>
+
+      <div id="module-slide-content" class="stack" style="flex:1;" aria-live="polite"></div>
+
+      <nav class="footer-nav no-print">
+        <div class="wrap btn-row" style="justify-content:space-between;">
+          <button class="btn btn-secondary" id="btn-slide-prev">◀ Anterior</button>
+          <button class="btn btn-ghost" id="btn-slide-menu">Menú</button>
+          <button class="btn btn-primary" id="btn-slide-next">Siguiente ▶</button>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: CONSULTA RÁPIDA ============ -->
+  <section id="screen-quickref" class="screen" aria-labelledby="quickref-title">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="icon-btn" id="btn-quickref-close" title="Cerrar">✕</button>
+        <span class="brand" id="quickref-title">Estamos jugando</span>
+        <span style="width:42px;"></span>
+      </div>
+      <div class="card">
+        <label for="quickref-search" class="visually-hidden">Buscar en las reglas</label>
+        <input type="text" id="quickref-search" class="search-box" placeholder="Buscar una regla… (ej. pozo, abrir, canasta)">
+        <div id="quickref-accordion"></div>
+        <p id="quickref-empty" class="muted" style="display:none;">No encontramos nada con esa palabra. Prueba con otro término.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: CALCULADORA DE PUNTUACIÓN ============ -->
+  <section id="screen-calc-score" class="screen" aria-labelledby="calc-score-title">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="icon-btn" id="btn-calcscore-to-menu" title="Volver al menú">☰</button>
+        <span class="brand" id="calc-score-title">Calculadora de puntuación</span>
+        <span style="width:42px;"></span>
+      </div>
+      <div class="card on-cream">
+        <p class="muted">Calcula el resultado de la mano para una pareja. Llena solo lo que aplique.</p>
+
+        <div class="field">
+          <label for="cs-limpias">Canastas limpias</label>
+          <input type="number" id="cs-limpias" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-sucias">Canastas sucias</label>
+          <input type="number" id="cs-sucias" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-sietes">Canastas de sietes</label>
+          <input type="number" id="cs-sietes" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-comod-completa">Canastas de comodines completas</label>
+          <input type="number" id="cs-comod-completa" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-comod-incompleta">Canastas de comodines incompletas</label>
+          <input type="number" id="cs-comod-incompleta" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-tresrojos">Número de treses rojos</label>
+          <input type="number" id="cs-tresrojos" min="0" max="4" value="0" inputmode="numeric">
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="cs-cuatro-tresrojos">
+          <label for="cs-cuatro-tresrojos">La pareja obtuvo los cuatro treses rojos</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="cs-siete-canastas">
+          <label for="cs-siete-canastas">La pareja logró siete canastas en esta mano</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="cs-cerro-canasta">
+          <label for="cs-cerro-canasta">Cerró al menos una canasta en esta mano</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="cs-ida-descartando">
+          <label for="cs-ida-descartando">Se fue descartando (+100)</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="cs-ida-sindescartar">
+          <label for="cs-ida-sindescartar">Se fue sin descartar (+200)</label>
+        </div>
+        <div class="field">
+          <label for="cs-bajadas">Puntos de cartas bajadas</label>
+          <input type="number" id="cs-bajadas" min="0" value="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cs-mano">Puntos de cartas restantes en la mano</label>
+          <input type="number" id="cs-mano" min="0" value="0" inputmode="numeric">
+        </div>
+
+        <button class="btn btn-primary" id="btn-calc-score" style="width:100%;">Calcular puntuación</button>
+        <p id="cs-warning" class="feedback-box bad" style="display:none;"></p>
+        <div id="cs-result" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: CALCULADORA DE APERTURA ============ -->
+  <section id="screen-calc-opening" class="screen" aria-labelledby="calc-opening-title">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="icon-btn" id="btn-calcopening-to-menu" title="Volver al menú">☰</button>
+        <span class="brand" id="calc-opening-title">Calculadora de apertura</span>
+        <span style="width:42px;"></span>
+      </div>
+      <div class="card on-cream">
+        <p class="muted">Elige el marcador acumulado de tu pareja y arma tus grupos para bajar. Puedes agregar varios grupos.</p>
+        <div class="field">
+          <label for="co-marcador">Marcador acumulado de tu pareja en la partida</label>
+          <select id="co-marcador">
+            <option value="0">0 a menos de 2,500 (necesitas 80)</option>
+            <option value="2500">2,500 a menos de 5,000 (necesitas 120)</option>
+            <option value="5000">5,000 a 7,500 (necesitas 150)</option>
+          </select>
+        </div>
+        <div id="co-groups"></div>
+        <button class="btn btn-secondary btn-sm" id="btn-co-add-group">+ Agregar grupo</button>
+        <div class="divider"></div>
+        <div id="co-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: EXAMEN ============ -->
+  <section id="screen-exam" class="screen" aria-labelledby="exam-title">
+    <div class="wrap" style="flex:1; display:flex; flex-direction:column;">
+      <div class="topbar">
+        <button class="icon-btn" id="btn-exam-to-menu" title="Volver al menú">☰</button>
+        <span class="brand" id="exam-title">Examen final</span>
+        <span style="width:42px;"></span>
+      </div>
+      <div id="exam-intro" class="card on-cream">
+        <p>Este examen tiene al menos 20 preguntas sobre todo lo que aprendiste. Necesitas al menos 80% para aprobar. Puedes repetirlo cuantas veces quieras.</p>
+        <p class="muted" id="exam-best-score"></p>
+        <button class="btn btn-primary" id="btn-exam-start">Comenzar examen</button>
+      </div>
+      <div id="exam-play" style="display:none; flex:1; display:none; flex-direction:column;">
+        <div class="exam-progress-dots" id="exam-dots"></div>
+        <div id="exam-question-content" class="card on-cream" style="flex:1;" aria-live="polite"></div>
+        <nav class="footer-nav no-print">
+          <div class="wrap btn-row" style="justify-content:flex-end;">
+            <button class="btn btn-primary" id="btn-exam-next" disabled>Siguiente pregunta ▶</button>
+          </div>
+        </nav>
+      </div>
+      <div id="exam-results" style="display:none;" class="card on-cream"></div>
+    </div>
+  </section>
+
+  <!-- ============ PANTALLA: CERTIFICADO ============ -->
+  <section id="screen-certificate" class="screen" aria-labelledby="certificate-title-wrap">
+    <div class="wrap">
+      <div class="topbar no-print">
+        <button class="icon-btn" id="btn-cert-to-menu" title="Volver al menú">☰</button>
+        <span class="brand" id="certificate-title-wrap">Certificado</span>
+        <span style="width:42px;"></span>
+      </div>
+      <div id="cert-locked" class="card on-cream center" style="display:none;">
+        <p style="font-size:2rem;">🔒</p>
+        <p>Todavía no has aprobado el examen final. Apruébalo con al menos 80% para desbloquear tu certificado.</p>
+        <button class="btn btn-primary" id="btn-cert-go-exam">Ir al examen</button>
+      </div>
+      <div id="cert-content" style="display:none;">
+        <div class="certificate" id="certificate-printable">
+          <div class="seal" aria-hidden="true">♠ ♥ ♦ ♣</div>
+          <p class="eyebrow" style="color:var(--gold-deep);">Certificado Oficial</p>
+          <h1>La Escuela de Canasta Ale y Mau certifica que:</h1>
+          <div class="name" id="cert-name">—</div>
+          <p>ha completado satisfactoriamente el curso y está oficialmente listo para sentarse a jugar.</p>
+          <p>Las cartas cambian, la suerte va y viene, pero la regla más importante siempre será:</p>
+          <h2 style="color:var(--ink); font-size:1.2rem;">Lo importante es convivir.</h2>
+          <div class="signature-row">
+            <span>Ale</span>
+            <span>Mau</span>
+          </div>
+          <div class="meta-row">
+            <span id="cert-date">Fecha</span>
+            <span id="cert-score">Resultado</span>
+          </div>
+        </div>
+        <p class="center muted" style="color:var(--cream-soft); margin-top:10px;">Esto no garantiza que vayas a ganarle a Ale y Mau. 😉</p>
+        <div class="btn-row center no-print" style="justify-content:center; margin-top:16px;">
+          <button class="btn btn-primary" id="btn-cert-print">🖨️ Imprimir / Guardar como PDF</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="confetti-layer" aria-hidden="true"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
