@@ -1,0 +1,20 @@
+{
+  "name": "Escuela de Canasta Ale y Mau",
+  "short_name": "Canasta Ale y Mau",
+  "description": "Aprende a jugar canasta desde cero. Lo importante es convivir.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b3226",
+  "theme_color": "#0b3226",
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
